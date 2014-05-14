@@ -22,44 +22,10 @@ describe('File metadata plugin', function () {
         });
     });
 
-    it('should set the default metadata', function () {
-        var def = {
-                town: 'St Paul de Varax',
-                time: '7:45'
-            },
-            func = fm(def);
-
-        func(files, metalsmith, function () {
-            assert.deepEqual(def, files.file1);
-            assert.deepEqual(def, files.file2);
-        });
-    });
-
-    it('should override the default metadata when a pattern matches', function () {
-        var town2 = 'Coligny',
-            def = {
-                town: 'St Paul de Varax',
-                time: '7:45'
-            },
-            func = fm(def, [{
-                metadata: {
-                    town: town2
-                },
-                pattern: '*1',
-            }]);
-
-        func(files, metalsmith, function () {
-            assert.equal(town2, files.file1.town);
-            assert.equal(def.time, files.file1.time);
-
-            assert.deepEqual(def, files.file2);
-        });
-    });
-
     it('should set the rule metadata when the pattern matches', function () {
         var town = 'St Paul de Varax',
             time = '7:45',
-            func = fm({}, [{
+            func = fm([{
                 metadata: {
                     town: town,
                     time: time
@@ -73,6 +39,26 @@ describe('File metadata plugin', function () {
 
             assert.notEqual(town, files.file2.town);
             assert.notEqual(time, files.file2.time);
+        });
+    });
+
+    it('should set the rule metadata to all files', function () {
+        var town = 'St Paul de Varax',
+            time = '7:45',
+            func = fm([{
+                metadata: {
+                    town: town,
+                    time: time
+                },
+                pattern: '*',
+            }]);
+
+        func(files, metalsmith, function () {
+            assert.equal(town, files.file1.town);
+            assert.equal(time, files.file1.time);
+
+            assert.equal(town, files.file2.town);
+            assert.equal(time, files.file2.time);
         });
     });
 });
