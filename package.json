@@ -1,0 +1,26 @@
+{
+  "name": "metalsmith-filemetadata",
+  "version": "0.0.1",
+  "description": "Metalsmith plugin to add metadata on files based on a pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dpobel/metalsmith-filemetadata.git"
+  },
+  "keywords": [
+    "metalsmith",
+    "plugin"
+  ],
+  "author": "Damien Pobel <damien@pobel.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dpobel/metalsmith-filemetadata/issues"
+  },
+  "homepage": "https://github.com/dpobel/metalsmith-filemetadata",
+  "dependencies": {
+    "minimatch": "^0.3.0"
+  }
+}
