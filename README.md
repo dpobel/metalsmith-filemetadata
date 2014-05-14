@@ -35,8 +35,8 @@ can override the previously applied rules.
 {
   "plugins": {
     "metalsmith-filemetadata": [
-      {pattern: "posts/*", metadata: {"section": "blogs", "type": "post"}},
-      {pattern: "pages/*", metadata: {"section": "content", "type": "page"}}
+      {"pattern": "posts/*", "metadata": {"section": "blogs", "type": "post"}},
+      {"pattern": "pages/*", "metadata": {"section": "content", "type": "page"}}
     ]
   }
 }
