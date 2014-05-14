@@ -18,11 +18,18 @@ module.exports = function(grunt) {
                 src: ['tests/*.js']
             },
         },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            all: ['*.js', 'tests/*.js'],
+        },
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('test', ['mochaTest']);
+    grunt.registerTask('test', ['mochaTest', 'jshint']);
     grunt.registerTask('default', ['test']);
 };
