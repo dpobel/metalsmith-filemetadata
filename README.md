@@ -29,6 +29,8 @@ matches the file, the corresponding `metadata` are set on the file entry, For a
 given file, all patterns are tested, so if several rules are matching, the later
 can override the previously applied rules.
 
+Adding the `preserve: true` to any rule will prevent overriding pre-defined values.
+
 ## CLI usage
 
 ```json
