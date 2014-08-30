@@ -61,4 +61,28 @@ describe('File metadata plugin', function () {
             assert.equal(time, files.file2.time);
         });
     });
+
+    it('should preserve pre-defined metadata when opts.preserve == true', function () {
+        var town = 'NYC',
+            time = '19:45',
+            files = {
+                "file1": {
+                     town: town,
+                     time: time,
+                },
+            },
+            func = fm([{
+                preserve: true,
+                metadata: {
+                    town: 'St Paul de Varax',
+                    time: '7:45',
+                },
+                pattern: '*',
+            }]);
+
+        func(files, metalsmith, function () {
+            assert.equal(town, files.file1.town);
+            assert.equal(time, files.file1.time);
+        });
+    });
 });

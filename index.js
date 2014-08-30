@@ -7,9 +7,12 @@ var Matcher = require('minimatch').Minimatch;
  * @param metadata {Object}
  * @private
  */
-function setMetadata(file, metadata) {
-    Object.keys(metadata).forEach(function (key) {
-        file[key] = metadata[key];
+function setMetadata(file, rule) {
+    Object.keys(rule.metadata).forEach(function (key) {
+        if (rule.preserve && key in file) {
+            return;
+        }
+        file[key] = rule.metadata[key];
     });
 }
 
@@ -29,7 +32,8 @@ module.exports = function (rules) {
     rules.forEach(function (rule) {
         matchers.push({
             matcher: new Matcher(rule.pattern),
-            metadata: rule.metadata
+            metadata: rule.metadata,
+            preserve: rule.preserve,
         });
     });
 
@@ -39,7 +43,7 @@ module.exports = function (rules) {
 
             matchers.forEach(function (rule) {
                 if ( rule.matcher.match(file) ) {
-                    setMetadata(fileObject, rule.metadata);
+                    setMetadata(fileObject, rule);
                 }
             });
         });
