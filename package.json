@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/dpobel/metalsmith-filemetadata",
   "dependencies": {
-    "minimatch": "^3.0.0"
+    "multimatch": "^2.1.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^2.3.4"
