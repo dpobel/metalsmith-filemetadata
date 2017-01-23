@@ -1,4 +1,5 @@
 var multimatch = require('multimatch');
+var interpolate = require('metalsmith-interpolate').default;
 
 /**
  * Sets some metadata on each file depending a pattern
@@ -13,12 +14,14 @@ module.exports = function (rules) {
   return function (files, metalsmith, done) {
     if (!rules) return done();
     rules.forEach((rule) => {
-      multimatch(Object.keys(files), rule.pattern).forEach((file) => {
+      multimatch(Object.keys(files), rule.pattern).forEach((src) => {
+        let file = files[src];
         Object.keys(rule.metadata).forEach((key) => {
           if (rule.preserve && file.hasOwnProperty(key)) return;
-          file[key] = rule.metadata[key];
+          file[key] = interpolate(rule.metadata[key], src, files);
         });
       });
     });
+    done();
   };
 };

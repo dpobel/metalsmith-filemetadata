@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/dpobel/metalsmith-filemetadata",
   "dependencies": {
+    "metalsmith-interpolate": "^0.1.0",
     "multimatch": "^2.1.0"
   },
   "devDependencies": {
