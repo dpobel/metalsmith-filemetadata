@@ -18,18 +18,16 @@ var fileMetadata = require('metalsmith-filemetadata');
 
 metalsmith.use(fileMetadata([
     {pattern: "posts/*", metadata: {"section": "blogs", "type": "post"}},
-    {pattern: "pages/*", metadata: {"section": "content", "type": "page"}}
+    {pattern: "pages/*", metadata: {"section": "content", "type": "page"}},
+    {
+      pattern: [ "posts/*", "pages/*", "!**/index*" ],
+      metadata: {
+        cover: 'images/{title}.jpg'
+      }
+    }
 ]));
 
 ```
-
-The `pattern` property of each rule should be a valid
-[minimatch](https://www.npmjs.org/package/minimatch) pattern. If the pattern
-matches the file, the corresponding `metadata` are set on the file entry, For a
-given file, all patterns are tested, so if several rules are matching, the later
-can override the previously applied rules.
-
-Adding the `preserve: true` to any rule will prevent overriding pre-defined values.
 
 ## CLI usage
 
@@ -43,6 +41,16 @@ Adding the `preserve: true` to any rule will prevent overriding pre-defined valu
   }
 }
 ```
+
+## Parameters
+
+ * `pattern`: {String|Array}
+   [multimatch](https://www.npmjs.org/package/multimatch) pattern to filter
+   files.
+ * `metadata`: {Object} key value pairs to set on matched files. If several
+   rules match the last rule will be applied. Values will be
+   [interpolated](https://www.npmjs.com/package/metalsmith-interpolate).
+ * `preserve`: {Boolean} preserve existing values.
 
 ## License
 
