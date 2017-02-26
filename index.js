@@ -18,7 +18,7 @@ module.exports = function (rules) {
         let file = files[src];
         Object.keys(rule.metadata).forEach((key) => {
           if (rule.preserve && file.hasOwnProperty(key)) return;
-          file[key] = interpolate(rule.metadata[key], src, files);
+          file[key] = interpolate(rule.metadata[key], src, files, rule.tokens);
         });
       });
     });

@@ -24,6 +24,15 @@ metalsmith.use(fileMetadata([
       metadata: {
         cover: 'images/{title}.jpg'
       }
+    },
+    {
+      // metalsmith-mapsite reads 'lastmod'
+      pattern: [ 'articles/*', '!articles/index' ],
+      // {lastmod} template evaluates to token passed in below
+      metadata: { 'lastmod': '{lastmod}' },
+      tokens: { lastmod: (meta) => {
+        return meta.modifiedDate.slice(0, 10)
+      }}
     }
 ]));
 
@@ -50,6 +59,8 @@ metalsmith.use(fileMetadata([
  * `metadata`: {Object} key value pairs to set on matched files. If several
    rules match the last rule will be applied. Values will be
    [interpolated](https://www.npmjs.com/package/metalsmith-interpolate).
+ * `tokens`: {Object} additional tokens you want to be available for
+   interpolation.
  * `preserve`: {Boolean} preserve existing values.
 
 ## License
