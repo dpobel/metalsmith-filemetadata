@@ -4,8 +4,6 @@ A Metalsmith plugin to add metadata on files based on a pattern.
 
 [![Build
 Status](https://travis-ci.org/dpobel/metalsmith-filemetadata.svg?branch=master)](https://travis-ci.org/dpobel/metalsmith-filemetadata)
-[![Dependency
-Status](https://gemnasium.com/dpobel/metalsmith-filemetadata.svg)](https://gemnasium.com/dpobel/metalsmith-filemetadata)
 
 ## Installation
 
