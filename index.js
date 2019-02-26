@@ -1,20 +1,5 @@
-var Matcher = require('minimatch').Minimatch;
-
-/**
- * Sets the given metadata on the file object
- *
- * @param file {Object}
- * @param metadata {Object}
- * @private
- */
-function setMetadata(file, rule) {
-    Object.keys(rule.metadata).forEach(function (key) {
-        if (rule.preserve && key in file) {
-            return;
-        }
-        file[key] = rule.metadata[key];
-    });
-}
+var multimatch = require('multimatch');
+var interpolate = require('metalsmith-interpolate').default;
 
 /**
  * Sets some metadata on each file depending a pattern
@@ -26,27 +11,17 @@ function setMetadata(file, rule) {
  * @return {Function}
  */
 module.exports = function (rules) {
-    var rules = rules || [],
-        matchers = [];
-
-    rules.forEach(function (rule) {
-        matchers.push({
-            matcher: new Matcher(rule.pattern),
-            metadata: rule.metadata,
-            preserve: rule.preserve,
+  return function (files, metalsmith, done) {
+    if (!rules) return done();
+    rules.forEach((rule) => {
+      multimatch(Object.keys(files), rule.pattern).forEach((src) => {
+        let file = files[src];
+        Object.keys(rule.metadata).forEach((key) => {
+          if (rule.preserve && file.hasOwnProperty(key)) return;
+          file[key] = interpolate(rule.metadata[key], src, files, rule.tokens);
         });
+      });
     });
-
-    return function (files, metalsmith, done) {
-        Object.keys(files).forEach(function (file) {
-            var fileObject = files[file];
-
-            matchers.forEach(function (rule) {
-                if ( rule.matcher.match(file) ) {
-                    setMetadata(fileObject, rule);
-                }
-            });
-        });
-        done();
-    };
+    done();
+  };
 };

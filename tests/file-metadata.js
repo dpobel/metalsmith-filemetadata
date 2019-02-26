@@ -85,4 +85,23 @@ describe('File metadata plugin', function () {
             assert.equal(time, files.file1.time);
         });
     });
+
+    it('should interpolate metadata values', function () {
+        var town = 'St Paul de Varax',
+            files = {
+                "file1": {
+                     town: town
+                },
+            },
+            func = fm([{
+                metadata: {
+                    place: 'in {town}'
+                },
+                pattern: '*',
+            }]);
+
+        func(files, metalsmith, function () {
+            assert.equal('in St Paul de Varax', files.file1.place);
+        });
+    });
 });
