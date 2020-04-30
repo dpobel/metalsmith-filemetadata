@@ -20,6 +20,9 @@
     "url": "https://github.com/dpobel/metalsmith-filemetadata/issues"
   },
   "homepage": "https://github.com/dpobel/metalsmith-filemetadata",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "dependencies": {
     "minimatch": "^3.0.0"
   },
