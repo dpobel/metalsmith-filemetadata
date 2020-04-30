@@ -4,7 +4,7 @@
   "description": "Metalsmith plugin to add metadata on files based on a pattern",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "./node_modules/.bin/mocha tests"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,6 @@
     "minimatch": "^3.0.0"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.3",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.3.4"
+    "mocha": "^7.1.1"
   }
 }
