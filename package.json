@@ -15,6 +15,9 @@
     "plugin"
   ],
   "author": "Damien Pobel <damien@pobel.fr>",
+  "contributors": [
+    "Kevin Van Lierde <kevin.van.lierde@gmail.com> (https://webketje.com)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dpobel/metalsmith-filemetadata/issues"
