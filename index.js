@@ -38,11 +38,16 @@ module.exports = function (rules) {
     });
 
     return function (files, metalsmith, done) {
+        var globalMetadata = metalsmith.metadata();
+
         Object.keys(files).forEach(function (file) {
             var fileObject = files[file];
 
             matchers.forEach(function (rule) {
                 if ( rule.matcher.match(file) ) {
+                    if (typeof rule.metadata === 'function') {
+                      rule = Object.assign({}, rule, { metadata: rule.metadata(fileObject, globalMetadata) });
+                    }
                     setMetadata(fileObject, rule);
                 }
             });

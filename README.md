@@ -23,11 +23,26 @@ metalsmith.use(fileMetadata([
 
 The `pattern` property of each rule should be a valid
 [minimatch](https://www.npmjs.org/package/minimatch) pattern. If the pattern
-matches the file, the corresponding `metadata` are set on the file entry, For a
-given file, all patterns are tested, so if several rules are matching, the later
+matches the file, the corresponding `metadata` are set on the file entry. For a
+given file, all patterns are tested, so if several rules are matching, the latter
 can override the previously applied rules.
 
-Adding the `preserve: true` to any rule will prevent overriding pre-defined values.
+The `metadata` property can also be a function, to enable making global metadata available to files,
+or setting file metadata defaults, e.g.:
+
+```js
+{
+  pattern: "posts/*",
+  metadata: function(file, globalMetadata) {
+    return {
+      title: file.keywords || globalMetadata.keywords,
+      allPosts: globalMetadata.collections.posts
+    };
+  }
+}
+```
+
+Adding `preserve: true` to any rule will prevent overriding pre-defined values.
 
 ## CLI usage
 

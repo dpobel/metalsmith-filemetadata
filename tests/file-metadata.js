@@ -83,13 +83,47 @@ describe('File metadata plugin', function () {
             });
     });
 
+    it('should set the rule metadata when its value is a function callback', function(done) {
+        var sitename = 'Metalsmith Filemetadata',
+            defaultTime = '00:00',
+            time = '7:45',
+            func = fm([{
+                metadata: function(file, globalMetadata) {
+                    return {
+                        sitename: globalMetadata.sitename,
+                        time: file.time ? file.time : defaultTime
+                    };
+                },
+                pattern: '*'
+            }]);
+
+        metalsmith
+            .metadata({
+                sitename: sitename
+            })
+            .use(function(files, metalsmith, next) {
+              files.file1.time = time;
+              next();
+            })
+            .use(func)
+            .process(function(err, files) {
+                if (err) done(err);
+
+                assert.equal(files.file1.sitename, sitename);
+                assert.equal(files.file1.time, time);
+                assert.equal(files.file2.time, defaultTime);
+
+                done();
+            });
+    });
+
     it('should preserve pre-defined metadata when opts.preserve == true', function (done) {
         var func = fm([{
             preserve: true,
             metadata: {
                 preserved: false
             },
-            pattern: '*',
+            pattern: '*{1,2}',
         }]);
 
         metalsmith
