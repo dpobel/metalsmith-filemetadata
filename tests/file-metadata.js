@@ -9,11 +9,10 @@ describe('File metadata plugin', function () {
       .ignore('file-metadata.js');
 
     beforeEach(function () {
-      metalsmith.use(function(metalsmithfiles) {
-        metalsmithfiles.file1 = {};
-        metalsmithfiles.file2 = {};
-        metalsmithfiles.file3 = { preserved: true };
-        files = metalsmithfiles;
+      metalsmith.use(function(files) {
+        files.file1 = {};
+        files.file2 = {};
+        files.file3 = { preserved: true };
       });
     });
 
