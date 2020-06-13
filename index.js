@@ -7,7 +7,10 @@ var Matcher = require('minimatch').Minimatch;
  * @param metadata {Object}
  * @private
  */
-function setMetadata(file, rule) {
+function setMetadata(file, global, rule) {
+    if (typeof rule.metadata === 'function') {
+      rule = Object.assign({}, rule, { metadata: rule.metadata(file, global) });
+    }
     Object.keys(rule.metadata).forEach(function (key) {
         if (rule.preserve && key in file) {
             return;
@@ -45,10 +48,7 @@ module.exports = function (rules) {
 
             matchers.forEach(function (rule) {
                 if ( rule.matcher.match(file) ) {
-                    if (typeof rule.metadata === 'function') {
-                      rule = Object.assign({}, rule, { metadata: rule.metadata(fileObject, globalMetadata) });
-                    }
-                    setMetadata(fileObject, rule);
+                    setMetadata(fileObject, globalMetadata, rule);
                 }
             });
         });
