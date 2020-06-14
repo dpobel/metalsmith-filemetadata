@@ -1,12 +1,5 @@
 var Matcher = require('minimatch').Minimatch;
 
-/**
- * Sets the given metadata on the file object
- *
- * @param file {Object}
- * @param metadata {Object}
- * @private
- */
 function setMetadata(file, global, rule) {
     if (typeof rule.metadata === 'function') {
       rule = Object.assign({}, rule, { metadata: rule.metadata(file, global) });
@@ -21,12 +14,6 @@ function setMetadata(file, global, rule) {
 
 /**
  * Sets some metadata on each file depending a pattern
- *
- * @param rules {Array} array of rules to set the metadata, each item of
- * the array should be a literal object containing a `pattern` entry (String)
- * and a `metadata` entry (Object)
- *
- * @return {Function}
  */
 module.exports = function (rules) {
     var rules = rules || [],
