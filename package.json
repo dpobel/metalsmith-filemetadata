@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-filemetadata",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Metalsmith plugin to add metadata on files based on a pattern",
   "main": "index.js",
   "scripts": {
