@@ -1,28 +1,37 @@
 /* global describe, it, beforeEach */
 var assert = require('assert'),
+    Metalsmith = require('metalsmith'),
     fm = require('..');
 
 describe('File metadata plugin', function () {
-    var files,
-        metalsmith = false; // allow to check it's not used at all
+    var metalsmith = Metalsmith(__dirname)
+      .source(__dirname)
+      .ignore('file-metadata.js');
 
     beforeEach(function () {
-        files = {
-            "file1": {},
-            "file2": {},
-        };
+      metalsmith.use(function(files) {
+        files.file1 = {};
+        files.file2 = {};
+        files.file3 = { preserved: true };
+      });
     });
 
-    it('should keep the files intact without parameters', function () {
+    it('should keep the files intact without parameters', function (done) {
         var func = fm();
 
-        func(files, metalsmith, function () {
-            assert.equal(0, Object.keys(files.file1).length);
-            assert.equal(0, Object.keys(files.file2).length);
-        });
+        metalsmith
+          .use(func)
+          .process(function(err, files) {
+              if (err) done(err);
+
+              assert.equal(0, Object.keys(files.file1).length);
+              assert.equal(0, Object.keys(files.file2).length);
+
+              done();
+          });
     });
 
-    it('should set the rule metadata when the pattern matches', function () {
+    it('should set the rule metadata when the pattern matches', function (done) {
         var town = 'St Paul de Varax',
             time = '7:45',
             func = fm([{
@@ -33,16 +42,22 @@ describe('File metadata plugin', function () {
                 pattern: '*1',
             }]);
 
-        func(files, metalsmith, function () {
-            assert.equal(town, files.file1.town);
-            assert.equal(time, files.file1.time);
+        metalsmith
+            .use(func)
+            .process(function(err, files) {
+                if (err) done(err);
 
-            assert.notEqual(town, files.file2.town);
-            assert.notEqual(time, files.file2.time);
-        });
+                assert.equal(town, files.file1.town);
+                assert.equal(time, files.file1.time);
+
+                assert.notEqual(town, files.file2.town);
+                assert.notEqual(time, files.file2.time);
+                
+                done();
+            });
     });
 
-    it('should set the rule metadata to all files', function () {
+    it('should set the rule metadata to all files', function (done) {
         var town = 'St Paul de Varax',
             time = '7:45',
             func = fm([{
@@ -53,36 +68,39 @@ describe('File metadata plugin', function () {
                 pattern: '*',
             }]);
 
-        func(files, metalsmith, function () {
-            assert.equal(town, files.file1.town);
-            assert.equal(time, files.file1.time);
+        metalsmith
+            .use(func)
+            .process(function(err, files) {
+                if (err) done(err);
 
-            assert.equal(town, files.file2.town);
-            assert.equal(time, files.file2.time);
-        });
+                assert.equal(town, files.file1.town);
+                assert.equal(time, files.file1.time);
+
+                assert.equal(town, files.file2.town);
+                assert.equal(time, files.file2.time);
+
+                done();
+            });
     });
 
-    it('should preserve pre-defined metadata when opts.preserve == true', function () {
-        var town = 'NYC',
-            time = '19:45',
-            files = {
-                "file1": {
-                     town: town,
-                     time: time,
-                },
+    it('should preserve pre-defined metadata when opts.preserve == true', function (done) {
+        var func = fm([{
+            preserve: true,
+            metadata: {
+                preserved: false
             },
-            func = fm([{
-                preserve: true,
-                metadata: {
-                    town: 'St Paul de Varax',
-                    time: '7:45',
-                },
-                pattern: '*',
-            }]);
+            pattern: '*',
+        }]);
 
-        func(files, metalsmith, function () {
-            assert.equal(town, files.file1.town);
-            assert.equal(time, files.file1.time);
-        });
+        metalsmith
+            .use(func)
+            .process(function(err, files) {
+                if (err) done(err);
+
+                assert.equal(false, files.file1.preserved);
+                assert.equal(true, files.file3.preserved);
+
+                done();
+            });
     });
 });
