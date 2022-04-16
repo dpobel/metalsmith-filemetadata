@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-    # Node 12
-    - "lts/erbium"
-    # Node 14
-    - "lts/fermium"
-    # Node 16
-    - "node"

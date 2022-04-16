@@ -2,8 +2,7 @@
 
 A Metalsmith plugin to add metadata on files based on a pattern.
 
-[![Build
-Status](https://travis-ci.org/dpobel/metalsmith-filemetadata.svg?branch=main)](https://travis-ci.org/dpobel/metalsmith-filemetadata)
+![Build status](https://github.com/dpobel/metalsmith-filemetadata/actions/workflows/main.yml/badge.svg)
 
 ## Installation
 
