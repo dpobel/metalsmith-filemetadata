@@ -11,13 +11,14 @@ A Metalsmith plugin to add metadata on files based on a pattern.
 ## JavaScript usage
 
 ```js
-const fileMetadata = require('metalsmith-filemetadata');
+const fileMetadata = require("metalsmith-filemetadata");
 
-metalsmith.use(fileMetadata([
-    {pattern: "posts/*", metadata: {"section": "blogs", "type": "post"}},
-    {pattern: "pages/*", metadata: {"section": "content", "type": "page"}}
-]));
-
+metalsmith.use(
+  fileMetadata([
+    { pattern: "posts/*", metadata: { section: "blogs", type: "post" } },
+    { pattern: "pages/*", metadata: { section: "content", type: "page" } },
+  ])
+);
 ```
 
 The `pattern` property of each rule should be a valid
@@ -49,8 +50,14 @@ Adding `preserve: true` to any rule will prevent overriding pre-defined values.
 {
   "plugins": {
     "metalsmith-filemetadata": [
-      {"pattern": "posts/*", "metadata": {"section": "blogs", "type": "post"}},
-      {"pattern": "pages/*", "metadata": {"section": "content", "type": "page"}}
+      {
+        "pattern": "posts/*",
+        "metadata": { "section": "blogs", "type": "post" }
+      },
+      {
+        "pattern": "pages/*",
+        "metadata": { "section": "content", "type": "page" }
+      }
     ]
   }
 }
