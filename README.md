@@ -11,7 +11,7 @@ A Metalsmith plugin to add metadata on files based on a pattern.
 ## JavaScript usage
 
 ```js
-var fileMetadata = require('metalsmith-filemetadata');
+const fileMetadata = require('metalsmith-filemetadata');
 
 metalsmith.use(fileMetadata([
     {pattern: "posts/*", metadata: {"section": "blogs", "type": "post"}},

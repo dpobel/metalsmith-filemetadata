@@ -1,4 +1,4 @@
-var Matcher = require('minimatch').Minimatch;
+const Matcher = require('minimatch').Minimatch;
 
 function setMetadata(file, global, rule) {
     if (typeof rule.metadata === 'function') {
@@ -15,9 +15,8 @@ function setMetadata(file, global, rule) {
 /**
  * Sets some metadata on each file depending a pattern
  */
-module.exports = function (rules) {
-    var rules = rules || [],
-        matchers = [];
+module.exports = function (rules = []) {
+    const matchers = [];
 
     rules.forEach(function (rule) {
         matchers.push({
@@ -28,10 +27,10 @@ module.exports = function (rules) {
     });
 
     return function (files, metalsmith, done) {
-        var globalMetadata = metalsmith.metadata();
+        const globalMetadata = metalsmith.metadata();
 
         Object.keys(files).forEach(function (file) {
-            var fileObject = files[file];
+            const fileObject = files[file];
 
             matchers.forEach(function (rule) {
                 if ( rule.matcher.match(file) ) {

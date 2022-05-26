@@ -1,10 +1,10 @@
 /* global describe, it, beforeEach */
-var assert = require('assert'),
-    Metalsmith = require('metalsmith'),
-    fm = require('..');
+const assert = require('assert');
+const Metalsmith = require('metalsmith');
+const fileMetadata = require('..');
 
 describe('File metadata plugin', function () {
-    var metalsmith = Metalsmith(__dirname)
+    const metalsmith = Metalsmith(__dirname)
       .source(__dirname)
       .ignore('file-metadata.js');
 
@@ -17,7 +17,7 @@ describe('File metadata plugin', function () {
     });
 
     it('should keep the files intact without parameters', function (done) {
-        var func = fm();
+        const func = fileMetadata();
 
         metalsmith
           .use(func)
@@ -32,9 +32,9 @@ describe('File metadata plugin', function () {
     });
 
     it('should set the rule metadata when the pattern matches', function (done) {
-        var town = 'St Paul de Varax',
-            time = '7:45',
-            func = fm([{
+        const town = 'St Paul de Varax';
+        const time = '7:45';
+        const func = fileMetadata([{
                 metadata: {
                     town: town,
                     time: time
@@ -52,15 +52,15 @@ describe('File metadata plugin', function () {
 
                 assert.notEqual(town, files.file2.town);
                 assert.notEqual(time, files.file2.time);
-                
+
                 done();
             });
     });
 
     it('should set the rule metadata to all files', function (done) {
-        var town = 'St Paul de Varax',
-            time = '7:45',
-            func = fm([{
+        const town = 'St Paul de Varax';
+        const time = '7:45';
+        const func = fileMetadata([{
                 metadata: {
                     town: town,
                     time: time
@@ -84,10 +84,10 @@ describe('File metadata plugin', function () {
     });
 
     it('should set the rule metadata when its value is a function callback', function(done) {
-        var sitename = 'Metalsmith Filemetadata',
-            defaultTime = '00:00',
-            time = '7:45',
-            func = fm([{
+        const sitename = 'Metalsmith Filemetadata';
+        const defaultTime = '00:00';
+        const time = '7:45';
+        const func = fileMetadata([{
                 metadata: function(file, globalMetadata) {
                     return {
                         sitename: globalMetadata.sitename,
@@ -118,7 +118,7 @@ describe('File metadata plugin', function () {
     });
 
     it('should preserve pre-defined metadata when opts.preserve == true', function (done) {
-        var func = fm([{
+        const func = fileMetadata([{
             preserve: true,
             metadata: {
                 preserved: false
