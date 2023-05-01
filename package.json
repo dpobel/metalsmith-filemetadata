@@ -28,7 +28,7 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "minimatch": "^5.0.1"
+    "minimatch": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
