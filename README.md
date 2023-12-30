@@ -17,7 +17,7 @@ metalsmith.use(
   fileMetadata([
     { pattern: "posts/*", metadata: { section: "blogs", type: "post" } },
     { pattern: "pages/*", metadata: { section: "content", type: "page" } },
-  ])
+  ]),
 );
 ```
 
