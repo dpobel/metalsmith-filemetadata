@@ -1,4 +1,3 @@
-/* global describe, it, beforeEach */
 const assert = require("assert");
 const Metalsmith = require("metalsmith");
 const fileMetadata = require("..");
