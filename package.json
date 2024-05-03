@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && mocha tests",
-    "lint": "prettier -c . && eslint ."
+    "lint": "prettier -c . && ESLINT_USE_FLAT_CONFIG=false eslint ."
   },
   "repository": {
     "type": "git",
