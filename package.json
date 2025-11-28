@@ -4,7 +4,7 @@
   "description": "Metalsmith plugin to add metadata on files based on a pattern",
   "main": "index.js",
   "scripts": {
-    "test": "npm run lint && node --test 'tests/*.js'",
+    "test": "npm run lint && node --test 'tests/file-metadata.js'",
     "lint": "prettier -c . && eslint ."
   },
   "repository": {
