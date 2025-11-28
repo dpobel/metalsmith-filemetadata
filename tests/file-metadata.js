@@ -1,24 +1,25 @@
 const assert = require("assert");
+const { describe, it, beforeEach } = require("node:test");
 const Metalsmith = require("metalsmith");
 const fileMetadata = require("..");
 
-describe("File metadata plugin", function () {
+describe("File metadata plugin", () => {
   const metalsmith = Metalsmith(__dirname)
     .source(__dirname)
     .ignore("file-metadata.js");
 
-  beforeEach(function () {
-    metalsmith.use(function (files) {
+  beforeEach(() => {
+    metalsmith.use((files) => {
       files.file1 = {};
       files.file2 = {};
       files.file3 = { preserved: true };
     });
   });
 
-  it("should keep the files intact without parameters", function (done) {
+  it("should keep the files intact without parameters", (_context, done) => {
     const func = fileMetadata();
 
-    metalsmith.use(func).process(function (err, files) {
+    metalsmith.use(func).process((err, files) => {
       if (err) done(err);
 
       assert.equal(0, Object.keys(files.file1).length);
@@ -28,7 +29,7 @@ describe("File metadata plugin", function () {
     });
   });
 
-  it("should set the rule metadata when the pattern matches", function (done) {
+  it("should set the rule metadata when the pattern matches", (_context, done) => {
     const town = "St Paul de Varax";
     const time = "7:45";
     const func = fileMetadata([
@@ -41,7 +42,7 @@ describe("File metadata plugin", function () {
       },
     ]);
 
-    metalsmith.use(func).process(function (err, files) {
+    metalsmith.use(func).process((err, files) => {
       if (err) done(err);
 
       assert.equal(town, files.file1.town);
@@ -54,7 +55,7 @@ describe("File metadata plugin", function () {
     });
   });
 
-  it("should set the rule metadata to all files", function (done) {
+  it("should set the rule metadata to all files", (_context, done) => {
     const town = "St Paul de Varax";
     const time = "7:45";
     const func = fileMetadata([
@@ -67,7 +68,7 @@ describe("File metadata plugin", function () {
       },
     ]);
 
-    metalsmith.use(func).process(function (err, files) {
+    metalsmith.use(func).process((err, files) => {
       if (err) done(err);
 
       assert.equal(town, files.file1.town);
@@ -80,18 +81,16 @@ describe("File metadata plugin", function () {
     });
   });
 
-  it("should set the rule metadata when its value is a function callback", function (done) {
+  it("should set the rule metadata when its value is a function callback", (_context, done) => {
     const sitename = "Metalsmith Filemetadata";
     const defaultTime = "00:00";
     const time = "7:45";
     const func = fileMetadata([
       {
-        metadata: function (file, globalMetadata) {
-          return {
-            sitename: globalMetadata.sitename,
-            time: file.time ? file.time : defaultTime,
-          };
-        },
+        metadata: (file, globalMetadata) => ({
+          sitename: globalMetadata.sitename,
+          time: file.time ? file.time : defaultTime,
+        }),
         pattern: "*",
       },
     ]);
@@ -100,12 +99,12 @@ describe("File metadata plugin", function () {
       .metadata({
         sitename: sitename,
       })
-      .use(function (files, metalsmith, next) {
+      .use((files, metalsmith, next) => {
         files.file1.time = time;
         next();
       })
       .use(func)
-      .process(function (err, files) {
+      .process((err, files) => {
         if (err) done(err);
 
         assert.equal(files.file1.sitename, sitename);
@@ -116,7 +115,7 @@ describe("File metadata plugin", function () {
       });
   });
 
-  it("should preserve pre-defined metadata when opts.preserve == true", function (done) {
+  it("should preserve pre-defined metadata when opts.preserve == true", (_context, done) => {
     const func = fileMetadata([
       {
         preserve: true,
@@ -127,7 +126,7 @@ describe("File metadata plugin", function () {
       },
     ]);
 
-    metalsmith.use(func).process(function (err, files) {
+    metalsmith.use(func).process((err, files) => {
       if (err) done(err);
 
       assert.equal(false, files.file1.preserved);
