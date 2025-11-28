@@ -13,12 +13,4 @@ module.exports = [
       },
     },
   },
-  {
-    files: ["tests/**"],
-    languageOptions: {
-      globals: {
-        ...globals.mocha,
-      },
-    },
-  },
 ];
