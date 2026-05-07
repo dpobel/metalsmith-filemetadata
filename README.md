@@ -6,7 +6,7 @@ A Metalsmith plugin to add metadata on files based on a pattern.
 
 ## Installation
 
-This plugin requires Node.js 20 or later
+This plugin requires Node.js 22 or later
 
     $ npm install metalsmith-filemetadata
 
